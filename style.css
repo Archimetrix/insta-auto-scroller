@@ -1,0 +1,293 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap');
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 320px;
+    background-color: #0a0a0a;
+    font-family: 'Outfit', sans-serif;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden; /* Helps prevent scrolling */
+}
+
+/* Completely hides the scrollbar in webkit browsers (like Chrome) */
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* Floating Animated Blobs in Background */
+.blob {
+    position: absolute;
+    filter: blur(60px);
+    z-index: 0;
+    opacity: 0.5;
+    animation: float 8s infinite alternate ease-in-out;
+}
+
+.blob-1 {
+    width: 200px;
+    height: 200px;
+    background: linear-gradient(135deg, #ff007f, #7928ca);
+    top: -40px;
+    left: -40px;
+}
+
+.blob-2 {
+    width: 250px;
+    height: 250px;
+    background: linear-gradient(135deg, #00d2ff, #3a7bd5);
+    bottom: -60px;
+    right: -40px;
+    animation-delay: -4s;
+}
+
+@keyframes float {
+    0% { transform: translate(0, 0) scale(1); }
+    100% { transform: translate(30px, 40px) scale(1.1); }
+}
+
+/* Glassmorphism Main Container */
+.glass-container {
+    position: relative;
+    z-index: 1;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    width: 100%;
+    box-sizing: border-box;
+    padding: 25px 20px 20px 20px;
+}
+
+/* Header & Logo Styles */
+.header-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.header-logo {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
+}
+
+.title {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+    background: linear-gradient(to right, #ffffff, #a1a1aa);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 0.5px;
+}
+
+/* Liquid Animated Button */
+.liquid-button {
+    position: relative;
+    padding: 16px 0;
+    width: 100%;
+    border: none;
+    border-radius: 16px;
+    background: transparent;
+    color: #fff;
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.liquid-button span {
+    position: relative;
+    z-index: 2;
+}
+
+.liquid-button .liquid {
+    position: absolute;
+    top: -80px;
+    left: 0;
+    width: 100%;
+    height: 200px;
+    background: linear-gradient(135deg, #7928ca, #ff007f);
+    transition: 0.5s;
+    z-index: 1;
+}
+
+.liquid-button .liquid::after,
+.liquid-button .liquid::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -75%);
+    background: #111;
+    opacity: 0.8;
+}
+
+.liquid-button .liquid::before {
+    border-radius: 45%;
+    background: rgba(15, 15, 15, 1);
+    animation: animateLiquid 5s linear infinite;
+}
+
+.liquid-button .liquid::after {
+    border-radius: 40%;
+    background: rgba(15, 15, 15, 0.5);
+    animation: animateLiquid 10s linear infinite;
+}
+
+.liquid-button:hover .liquid {
+    top: -120px;
+}
+
+.liquid-button:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 10px 25px rgba(121, 40, 202, 0.4);
+}
+
+@keyframes animateLiquid {
+    0% { transform: translate(-50%, -75%) rotate(0deg); }
+    100% { transform: translate(-50%, -75%) rotate(360deg); }
+}
+
+/* Glass Toggles */
+.toggles-wrapper {
+    margin-top: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.toggle-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(255, 255, 255, 0.02);
+    padding: 14px 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+    transition: all 0.3s ease;
+}
+
+.toggle-section:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.toggle-section p {
+    margin: 0;
+    font-size: 14px;
+    color: #e4e4e7;
+    font-weight: 400;
+}
+
+.toggle-container {
+    position: relative;
+    display: inline-block;
+    width: 48px;
+    height: 26px;
+}
+
+.toggle-container input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.08);
+    border-radius: 26px;
+    transition: 0.4s;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.toggle-container input:checked + .toggle-slider {
+    background: linear-gradient(90deg, #00d2ff, #3a7bd5);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 12px rgba(0, 210, 255, 0.3);
+    border-color: transparent;
+}
+
+.toggle-slider::before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 4px;
+    bottom: 3px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.toggle-container input:checked + .toggle-slider::before {
+    transform: translateX(20px);
+}
+
+/* Footer & GitHub Link */
+.footer {
+    margin-top: 25px;
+    padding-top: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    /* Removed the border-top dividing line entirely */
+}
+
+.credit-text {
+    margin: 0;
+    font-size: 13px;
+    color: #a1a1aa;
+}
+
+.credit-text strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.github-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    background: rgba(255, 255, 255, 0.06);
+    padding: 8px 18px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.github-link:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px);
+}
+
+.github-link svg {
+    transition: transform 0.3s ease;
+}
+
+.github-link:hover svg {
+    transform: scale(1.1) rotate(5deg);
+}

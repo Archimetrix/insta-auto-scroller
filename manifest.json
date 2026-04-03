@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "Insta Auto-Scroller",
+  "version": "1.0",
+  "description": "Auto-scrolling and comment opening for Reels.",
+  "icons": {
+      "16": "imgs/icon16.png",
+      "32": "imgs/icon32.png",
+      "48": "imgs/icon48.png",
+      "128": "imgs/icon128.png"
+    },
+  "permissions": [
+    "storage", 
+    "activeTab"
+    ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.instagram.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_icon": "imgs/icon128.png",
+    "default_popup": "popup.html"
+  },
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ]
+}
