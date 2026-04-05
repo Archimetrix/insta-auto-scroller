@@ -1,5 +1,6 @@
 chrome.runtime.onInstalled.addListener(() => {
-    chrome.storage.sync.get(["autoRedirect", "autoReelsStart", "applicationIsOn", "autoComments", "autoUnmute"], (result) => {
+    chrome.storage.sync.get(["showDownload", "autoRedirect", "autoReelsStart", "applicationIsOn", "autoComments", "autoUnmute"], (result) => {
+      if (result.showDownload === undefined) chrome.storage.sync.set({ showDownload: true });
       if (result.autoRedirect === undefined) chrome.storage.sync.set({ autoRedirect: false });
       if (result.autoReelsStart === undefined) chrome.storage.sync.set({ autoReelsStart: true });
       if (result.applicationIsOn === undefined) chrome.storage.sync.set({ applicationIsOn: true });
@@ -8,8 +9,11 @@ chrome.runtime.onInstalled.addListener(() => {
     });
 });
 
-chrome.runtime.onMessage.addListener(data => {
+chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
   switch(data.event) {
+    case "showDownload":
+      chrome.storage.sync.set( {"showDownload" : data.showDownloadValue} );
+      break;
     case "autoRedirect":
       chrome.storage.sync.set( {"autoRedirect" : data.autoRedirectValue} );
       break;

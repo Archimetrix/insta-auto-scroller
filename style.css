@@ -8,15 +8,13 @@ html, body {
     font-family: 'Outfit', sans-serif;
     color: #ffffff;
     position: relative;
-    overflow: hidden; /* Helps prevent scrolling */
+    overflow: hidden; 
 }
 
-/* Completely hides the scrollbar in webkit browsers (like Chrome) */
 ::-webkit-scrollbar {
     display: none;
 }
 
-/* Floating Animated Blobs in Background */
 .blob {
     position: absolute;
     filter: blur(60px);
@@ -47,7 +45,6 @@ html, body {
     100% { transform: translate(30px, 40px) scale(1.1); }
 }
 
-/* Glassmorphism Main Container */
 .glass-container {
     position: relative;
     z-index: 1;
@@ -59,7 +56,6 @@ html, body {
     padding: 25px 20px 20px 20px;
 }
 
-/* Header & Logo Styles */
 .header-wrapper {
     display: flex;
     align-items: center;
@@ -85,7 +81,7 @@ html, body {
     letter-spacing: 0.5px;
 }
 
-/* Liquid Animated Button */
+/* Base Liquid Button (Paused / "Start" State) */
 .liquid-button {
     position: relative;
     padding: 16px 0;
@@ -102,6 +98,7 @@ html, body {
     overflow: hidden;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
 }
 
 .liquid-button span {
@@ -115,7 +112,8 @@ html, body {
     left: 0;
     width: 100%;
     height: 200px;
-    background: linear-gradient(135deg, #7928ca, #ff007f);
+    /* Cool blue colors for paused state */
+    background: linear-gradient(135deg, #1e3a8a, #0ea5e9);
     transition: 0.5s;
     z-index: 1;
 }
@@ -133,16 +131,29 @@ html, body {
     opacity: 0.8;
 }
 
+/* Slow animation for paused state */
 .liquid-button .liquid::before {
     border-radius: 45%;
     background: rgba(15, 15, 15, 1);
-    animation: animateLiquid 5s linear infinite;
+    animation: animateLiquid 10s linear infinite; 
 }
-
 .liquid-button .liquid::after {
     border-radius: 40%;
     background: rgba(15, 15, 15, 0.5);
-    animation: animateLiquid 10s linear infinite;
+    animation: animateLiquid 15s linear infinite;
+}
+
+/* Active Running Button ("Stop" State) */
+.liquid-button.running .liquid {
+    /* Hot pink/purple for active state */
+    background: linear-gradient(135deg, #7928ca, #ff007f);
+}
+/* Fast animation for active state */
+.liquid-button.running .liquid::before {
+    animation: animateLiquid 4s linear infinite;
+}
+.liquid-button.running .liquid::after {
+    animation: animateLiquid 8s linear infinite;
 }
 
 .liquid-button:hover .liquid {
@@ -151,7 +162,6 @@ html, body {
 
 .liquid-button:hover {
     border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 10px 25px rgba(121, 40, 202, 0.4);
 }
 
 @keyframes animateLiquid {
@@ -159,7 +169,6 @@ html, body {
     100% { transform: translate(-50%, -75%) rotate(360deg); }
 }
 
-/* Glass Toggles */
 .toggles-wrapper {
     margin-top: 25px;
     display: flex;
@@ -240,7 +249,6 @@ html, body {
     transform: translateX(20px);
 }
 
-/* Footer & GitHub Link */
 .footer {
     margin-top: 25px;
     padding-top: 18px;
@@ -248,7 +256,6 @@ html, body {
     flex-direction: column;
     align-items: center;
     gap: 12px;
-    /* Removed the border-top dividing line entirely */
 }
 
 .credit-text {

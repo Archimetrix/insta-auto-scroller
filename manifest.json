@@ -18,7 +18,11 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://www.instagram.com/*"],
+      "matches": [
+        "https://www.instagram.com/*", 
+        "https://fastdl.app/*", 
+        "https://sssinstagram.com/*"
+      ],
       "js": ["content.js"],
       "run_at": "document_end"
     }
