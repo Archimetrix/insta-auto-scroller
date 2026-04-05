@@ -1,4 +1,10 @@
-# 📱 Insta Auto-Scroller
+<div align="center">
+  <img src="imgs/lcon128.png" alt="Insta Auto Scroller " width="150"/>
+  <h1> Insta Auto Scroller</h1>
+
+  ![Version](https://img.shields.io/badge/version-1.0-blue.svg)
+  ![Platform](https://img.shields.io/badge/platform-chromium_-green.svg)
+</div># 📱 Insta Auto-Scroller
 
 A premium, modern Chrome extension that upgrades your Instagram Reels experience by automating tedious tasks. Sit back and watch—no more manual scrolling or unmuting.
 
@@ -49,3 +55,4 @@ Contributions, issues, and feature requests are welcome! Feel free to check the 
 ---
 
 Made with love ❤️ by [archimetrix](https://github.com/Archimetrix/insta-auto-scroller)
+
