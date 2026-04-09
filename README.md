@@ -18,7 +18,7 @@ Features a sleek, edge-to-edge glassmorphism UI with animated liquid gradients a
 * **Auto-Unmute:** Ensures reels are unmuted by default so you never miss the audio.
 * **Modern UI:** A stunning, fully custom interface featuring floating background orbs, frosted glass elements, and a liquid-animated start button.
 * **Download Reels** Download reels with one click the modern extension will handle the download automatically through a external downloader .
-  ---
+---
 
 ## 📥 Download
 
@@ -29,7 +29,7 @@ Features a sleek, edge-to-edge glassmorphism UI with animated liquid gradients a
   <img src="https://img.shields.io/badge/Download_ZIP-101010?style=for-the-badge&logo=github&logoColor=white" alt="Download ZIP" height="56">
 </a>
 > **Note:** Currently available officially on the Firefox Add-ons store. For Chrome, Edge, and Opera users, please use the **Download ZIP** button above and follow the quick **Local Installation** guide below.
-
+---
 ## 🚀 How to Install (Developer Mode)
 
 Since this extension is highly customized, you can install it directly from this repository in just a few steps:
