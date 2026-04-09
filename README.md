@@ -30,6 +30,8 @@ Features a sleek, edge-to-edge glassmorphism UI with animated liquid gradients a
 </a>
 > **Note:** Currently available officially on the Firefox Add-ons store. For Chrome, Edge, and Opera users, please use the **Download ZIP** button above and follow the quick **Local Installation** guide below.
 ---
+
+
 ## 🚀 How to Install (Developer Mode)
 
 Since this extension is highly customized, you can install it directly from this repository in just a few steps:
