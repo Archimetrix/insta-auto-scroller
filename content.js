@@ -91,7 +91,13 @@ function runInstagramScript() {
 
     function checkURLAndManageApp() {
       chrome.storage.sync.get(["autoRedirect"], (result) => {
-        if (result.autoRedirect && window.location.pathname === "/") {
+        // Only auto-redirect once per tab session (on initial load).
+        // Without this guard, every time the user clicks the Home tab it
+        // would redirect them back to /reels/ because the URL briefly
+        // becomes "/" on every home navigation.
+        const alreadyRedirected = sessionStorage.getItem("autoRedirectDone");
+        if (result.autoRedirect && window.location.pathname === "/" && !alreadyRedirected) {
+          sessionStorage.setItem("autoRedirectDone", "true");
           window.location.replace("https://www.instagram.com/reels/");
           return; 
         }
