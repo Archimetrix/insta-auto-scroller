@@ -72,6 +72,11 @@ Since this extension is highly customized, you can install it directly from this
 
 ![Popup UI](imgs/popup.png)
 
+## ⚖️ License & Copyright
+
+**Copyright © 2026 Archimetrix. All Rights Reserved.**
+
+> This repository and its contents are proprietary. You may not copy, reproduce, distribute, publish, display, perform, modify, create derivative works, transmit, or in any way exploit any such content, nor may you distribute any part of this content over any network, including a local area network, sell or offer it for sale, or use such content to construct any kind of database.
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](../../issues).
