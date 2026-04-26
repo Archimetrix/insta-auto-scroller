@@ -20,6 +20,8 @@ Features a sleek, edge-to-edge glassmorphism UI with animated liquid gradients a
 * **Auto-Unmute:** Ensures reels are unmuted by default so you never miss the audio.
 * **Modern UI:** A stunning, fully custom interface featuring floating background orbs, frosted glass elements, and a liquid-animated start button.
 * **Download Reels:** Download reels with one click. The modern extension will handle the download automatically through an external downloader.
+* **ProgressBar In Reels** A progress bar in reels section is now implemented you can control the playback .
+* **Anonymous Story Viewer** Anonomously view any story in instagram noone will know that you viewed their stories .
 
 ---
 
