@@ -8,7 +8,7 @@ html, body {
     font-family: 'Outfit', sans-serif;
     color: #ffffff;
     position: relative;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -53,26 +53,26 @@ html, body {
     -webkit-backdrop-filter: blur(25px);
     width: 100%;
     box-sizing: border-box;
-    padding: 25px 20px 20px 20px;
+    padding: 18px 18px 20px 18px;
 }
 
 .header-wrapper {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    margin-bottom: 25px;
+    gap: 9px;
+    margin-bottom: 14px;
 }
 
 .header-logo {
-    width: 28px;
-    height: 28px;
+    width: 24px;
+    height: 24px;
     border-radius: 6px;
-    box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.15);
 }
 
 .title {
-    font-size: 22px;
+    font-size: 19px;
     font-weight: 600;
     margin: 0;
     background: linear-gradient(to right, #ffffff, #a1a1aa);
@@ -81,22 +81,22 @@ html, body {
     letter-spacing: 0.5px;
 }
 
-/* Base Liquid Button (Paused / "Start" State) */
+/* Base Liquid Button */
 .liquid-button {
     position: relative;
-    padding: 16px 0;
+    padding: 12px 0;
     width: 100%;
     border: none;
-    border-radius: 16px;
+    border-radius: 14px;
     background: transparent;
     color: #fff;
     font-family: inherit;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     letter-spacing: 1px;
     cursor: pointer;
     overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all 0.3s ease;
 }
@@ -112,7 +112,6 @@ html, body {
     left: 0;
     width: 100%;
     height: 200px;
-    /* Cool blue colors for paused state */
     background: linear-gradient(135deg, #1e3a8a, #0ea5e9);
     transition: 0.5s;
     z-index: 1;
@@ -131,11 +130,10 @@ html, body {
     opacity: 0.8;
 }
 
-/* Slow animation for paused state */
 .liquid-button .liquid::before {
     border-radius: 45%;
     background: rgba(15, 15, 15, 1);
-    animation: animateLiquid 10s linear infinite; 
+    animation: animateLiquid 10s linear infinite;
 }
 .liquid-button .liquid::after {
     border-radius: 40%;
@@ -143,12 +141,9 @@ html, body {
     animation: animateLiquid 15s linear infinite;
 }
 
-/* Active Running Button ("Stop" State) */
 .liquid-button.running .liquid {
-    /* Hot pink/purple for active state */
     background: linear-gradient(135deg, #7928ca, #ff007f);
 }
-/* Fast animation for active state */
 .liquid-button.running .liquid::before {
     animation: animateLiquid 4s linear infinite;
 }
@@ -170,10 +165,10 @@ html, body {
 }
 
 .toggles-wrapper {
-    margin-top: 25px;
+    margin-top: 12px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 7px;
 }
 
 .toggle-section {
@@ -181,8 +176,8 @@ html, body {
     align-items: center;
     justify-content: space-between;
     background: rgba(255, 255, 255, 0.02);
-    padding: 14px 18px;
-    border-radius: 16px;
+    padding: 10px 14px;
+    border-radius: 12px;
     border: 1px solid rgba(255, 255, 255, 0.04);
     transition: all 0.3s ease;
 }
@@ -194,7 +189,7 @@ html, body {
 
 .toggle-section p {
     margin: 0;
-    font-size: 14px;
+    font-size: 13px;
     color: #e4e4e7;
     font-weight: 400;
 }
@@ -202,8 +197,9 @@ html, body {
 .toggle-container {
     position: relative;
     display: inline-block;
-    width: 48px;
-    height: 26px;
+    width: 42px;
+    height: 23px;
+    flex-shrink: 0;
 }
 
 .toggle-container input {
@@ -220,7 +216,7 @@ html, body {
     right: 0;
     bottom: 0;
     background-color: rgba(255, 255, 255, 0.08);
-    border-radius: 26px;
+    border-radius: 23px;
     transition: 0.4s;
     box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.4);
     border: 1px solid rgba(255, 255, 255, 0.05);
@@ -228,15 +224,15 @@ html, body {
 
 .toggle-container input:checked + .toggle-slider {
     background: linear-gradient(90deg, #00d2ff, #3a7bd5);
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 12px rgba(0, 210, 255, 0.3);
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2), 0 0 10px rgba(0, 210, 255, 0.3);
     border-color: transparent;
 }
 
 .toggle-slider::before {
     position: absolute;
     content: "";
-    height: 18px;
-    width: 18px;
+    height: 15px;
+    width: 15px;
     left: 4px;
     bottom: 3px;
     background-color: #ffffff;
@@ -246,21 +242,22 @@ html, body {
 }
 
 .toggle-container input:checked + .toggle-slider::before {
-    transform: translateX(20px);
+    transform: translateX(18px);
 }
 
 .footer {
-    margin-top: 25px;
-    padding-top: 18px;
+    margin-top: 13px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 9px;
 }
 
 .credit-text {
     margin: 0;
-    font-size: 13px;
+    font-size: 12px;
     color: #a1a1aa;
 }
 
@@ -269,32 +266,55 @@ html, body {
     font-weight: 600;
 }
 
-.github-link {
+.footer-links {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.footer-btn {
     display: flex;
     align-items: center;
-    gap: 8px;
-    color: #ffffff;
+    gap: 6px;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 12px;
     font-weight: 600;
-    background: rgba(255, 255, 255, 0.06);
-    padding: 8px 18px;
+    padding: 7px 14px;
     border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.12);
     transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.github-link {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.07);
 }
 
 .github-link:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.16);
     border-color: rgba(255, 255, 255, 0.3);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
     transform: translateY(-2px);
 }
 
-.github-link svg {
-    transition: transform 0.3s ease;
+.bmc-link {
+    color: #1a1a1a;
+    background: linear-gradient(135deg, #ffdd00, #ffa500);
+    border-color: transparent;
 }
 
-.github-link:hover svg {
-    transform: scale(1.1) rotate(5deg);
+.bmc-link:hover {
+    background: linear-gradient(135deg, #ffe533, #ffb833);
+    box-shadow: 0 4px 12px rgba(255, 200, 0, 0.35);
+    transform: translateY(-2px);
+}
+
+.footer-btn svg {
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.footer-btn:hover svg {
+    transform: scale(1.15) rotate(5deg);
 }

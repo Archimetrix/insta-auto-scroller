@@ -1,3 +1,7 @@
+// Cross-browser compatibility shim
+// In content scripts, `browser` is available in Firefox and `chrome` in Chrome/Edge.
+const api = typeof browser !== "undefined" ? browser : chrome;
+
 const CURRENT_HOST = window.location.hostname;
 
 // Determine which site we are on and run the correct script safely
@@ -89,32 +93,28 @@ function runInstagramScript() {
       }
     }
 
+    // One-time redirect on real page load only — NOT inside any observer.
+    // Because this runs only once at script startup, clicking Home later
+    // will never trigger it again. The next fresh tab open will redirect again.
+    api.storage.sync.get(["autoRedirect"], (result) => {
+      if (result.autoRedirect && window.location.pathname === "/") {
+        window.location.replace("https://www.instagram.com/reels/");
+      }
+    });
+
     function checkURLAndManageApp() {
-      chrome.storage.sync.get(["autoRedirect"], (result) => {
-        // Only auto-redirect once per tab session (on initial load).
-        // Without this guard, every time the user clicks the Home tab it
-        // would redirect them back to /reels/ because the URL briefly
-        // becomes "/" on every home navigation.
-        const alreadyRedirected = sessionStorage.getItem("autoRedirectDone");
-        if (result.autoRedirect && window.location.pathname === "/" && !alreadyRedirected) {
-          sessionStorage.setItem("autoRedirectDone", "true");
-          window.location.replace("https://www.instagram.com/reels/");
-          return; 
-        }
+      const isOnInstagram = window.location.href.startsWith("https://www.instagram.com/");
+      const isOnReelsPage = window.location.href.startsWith("https://www.instagram.com/reels/");
 
-        const isOnInstagram = window.location.href.startsWith("https://www.instagram.com/");
-        const isOnReelsPage = window.location.href.startsWith("https://www.instagram.com/reels/");
-
-        if (isOnInstagram && isOnReelsPage && !isOnReels) {
-          isOnReels = true;
-          initializeExtension(); 
-        } else if ((isOnInstagram && !isOnReelsPage) || !isOnInstagram) {
-          if (isOnReels) {
-            isOnReels = false;
-            stopApp(); 
-          }
+      if (isOnInstagram && isOnReelsPage && !isOnReels) {
+        isOnReels = true;
+        initializeExtension();
+      } else if ((isOnInstagram && !isOnReelsPage) || !isOnInstagram) {
+        if (isOnReels) {
+          isOnReels = false;
+          stopApp();
         }
-      });
+      }
     }
 
     let lastUrl = window.location.href;
@@ -162,13 +162,15 @@ function runInstagramScript() {
         let autoComments;
         let autoUnmute;
         let showDownloadBtn = true;
+        let showProgressBar = true;
 
         function getStoredSettings() {
-          chrome.storage.sync.get(["autoReelsStart", "autoComments", "autoUnmute", "showDownload"], (result) => {
+          api.storage.sync.get(["autoReelsStart", "autoComments", "autoUnmute", "showDownload", "showProgressBar"], (result) => {
             autoReelsStart = result.autoReelsStart;
             autoComments = result.autoComments;
             autoUnmute = result.autoUnmute;
             showDownloadBtn = result.showDownload !== undefined ? result.showDownload : true;
+            showProgressBar = result.showProgressBar !== undefined ? result.showProgressBar : true;
             
             if (autoReelsStart) startAutoScrolling();
             if (autoUnmute) {
@@ -179,33 +181,36 @@ function runInstagramScript() {
 
         getStoredSettings();
 
-        chrome.storage.onChanged.addListener((changes, areaName) => {
+        api.storage.onChanged.addListener((changes, areaName) => {
           if (areaName === "sync") {
             if (changes.autoReelsStart) autoReelsStart = changes.autoReelsStart.newValue;
             if (changes.autoComments) autoComments = changes.autoComments.newValue;
             if (changes.autoUnmute) autoUnmute = changes.autoUnmute.newValue;
             if (changes.showDownload) showDownloadBtn = changes.showDownload.newValue;
+            if (changes.showProgressBar) showProgressBar = changes.showProgressBar.newValue;
           }
         });
 
-        chrome.runtime.onMessage.addListener((data, sender, sendResponse) => {
+        api.runtime.onMessage.addListener((data, sender, sendResponse) => {
           if (data.event === "toggleAutoReels") {
             if (data.action === "start") {
-              chrome.storage.sync.set({ autoReelsStart: true });
+              api.storage.sync.set({ autoReelsStart: true });
               autoReelsStart = true;
               startAutoScrolling();
             } else if (data.action === "stop") {
-              chrome.storage.sync.set({ autoReelsStart: false });
+              api.storage.sync.set({ autoReelsStart: false });
               autoReelsStart = false;
               stopAutoScrolling();
             }
           }
         });
 
+        // ----------- Auto Scrolling ----------- //
+
         function startAutoScrolling() {
           if (!applicationIsOn) {
             applicationIsOn = true;
-            chrome.storage.sync.set({ applicationIsOn: true });
+            api.storage.sync.set({ applicationIsOn: true });
           }
           setTimeout(() => {
             if (autoReelsStart) beginAutoScrollLoop();
@@ -215,7 +220,7 @@ function runInstagramScript() {
         function stopAutoScrolling() {
           if (applicationIsOn) {
             applicationIsOn = false;
-            chrome.storage.sync.set({ applicationIsOn: false });
+            api.storage.sync.set({ applicationIsOn: false });
           }
         }
 
@@ -228,7 +233,7 @@ function runInstagramScript() {
                 currentVideo.addEventListener("ended", onVideoEnd);
               }
             }
-          }, 100); 
+          }, 100);
         }
 
         function onVideoEnd() {
@@ -247,7 +252,7 @@ function runInstagramScript() {
         function getNextVideo(currentVideo) {
           const videos = Array.from(document.querySelectorAll(VIDEOS_LIST_SELECTOR));
           const index = videos.findIndex((vid) => vid === currentVideo);
-          return [videos[index + 1] || null, index + 1]; 
+          return [videos[index + 1] || null, index + 1];
         }
 
         function scrollToNextVideo(nextVideo, nextVideoIndex) {
@@ -418,9 +423,88 @@ function runInstagramScript() {
           videos.forEach((video) => { if (!video.dataset.processed) observeVideo(video); });
         }
 
+        // ----------- Video Progress Bar ----------- //
+
+        function injectProgressBar(video) {
+            if (video.dataset.hasBar) return;
+            video.dataset.hasBar = "1";
+
+            const bar = document.createElement("div");
+            bar.className = "ig-progressbar";
+
+            const fill = document.createElement("div");
+            fill.className = "ig-progressbar-fill";
+
+            const handle = document.createElement("div");
+            handle.className = "ig-progressbar-handle";
+
+            fill.appendChild(handle);
+            bar.appendChild(fill);
+
+            const wrapper = video.parentElement;
+            if (!wrapper) return;
+            wrapper.style.position = "relative";
+            wrapper.appendChild(bar);
+
+            let isDragging = false;
+
+            function updateBar() {
+                if (!isDragging && video.duration > 0) {
+                    const percent = video.currentTime / video.duration;
+                    fill.style.width = (percent * 100) + "%";
+                    handle.style.left = (percent * bar.clientWidth) + "px";
+                }
+                requestAnimationFrame(updateBar);
+            }
+            updateBar();
+
+            function setScrubPosition(clientX) {
+                const rect = bar.getBoundingClientRect();
+                let percent = (clientX - rect.left) / rect.width;
+                percent = Math.min(Math.max(percent, 0), 1);
+                fill.style.width = (percent * 100) + "%";
+                handle.style.left = (percent * rect.width) + "px";
+                video.currentTime = percent * video.duration;
+            }
+
+            bar.addEventListener("mousedown", (e) => {
+                isDragging = true;
+                setScrubPosition(e.clientX);
+            });
+
+            handle.addEventListener("mousedown", (e) => {
+                e.stopPropagation();
+                isDragging = true;
+            });
+
+            document.addEventListener("mousemove", (e) => {
+                if (isDragging) setScrubPosition(e.clientX);
+            });
+
+            document.addEventListener("mouseup", () => {
+                isDragging = false;
+            });
+        }
+
+        function injectProgressBars() {
+            if (!appIsRunning) return;
+            if (!showProgressBar) {
+                document.querySelectorAll("main video").forEach(v => {
+                    if (v.dataset.hasBar) {
+                        const bar = v.parentElement && v.parentElement.querySelector(".ig-progressbar");
+                        if (bar) bar.remove();
+                        delete v.dataset.hasBar;
+                    }
+                });
+                return;
+            }
+            document.querySelectorAll("main video").forEach(v => injectProgressBar(v));
+        }
+
         setInterval(() => {
             checkAndObserveNewVideos();
             injectDownloadButtons();
+            injectProgressBars();
         }, 500);
 
         function autoUnmuteAction() {

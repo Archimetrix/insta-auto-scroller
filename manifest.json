@@ -1,30 +1,53 @@
 {
   "manifest_version": 3,
-  "name": "Insta Auto-Scroller",
-  "version": "1.0",
-  "description": "Auto-scrolling and comment opening for Reels.",
+  "name": "Insta Super Features",
+  "version": "3.0",
+  "description": "Auto-scrolling and auto comment opening for Reels, Auto unmute , Progress bar in reeels , Download Reels,Anonymous story viewer",
   "icons": {
-      "16": "imgs/icon16.png",
-      "32": "imgs/icon32.png",
-      "48": "imgs/icon48.png",
-      "128": "imgs/icon128.png"
-    },
+    "16": "imgs/icon16.png",
+    "32": "imgs/icon32.png",
+    "48": "imgs/icon48.png",
+    "128": "imgs/icon128.png"
+  },
   "permissions": [
-    "storage", 
-    "activeTab"
-    ],
+    "storage",
+    "activeTab",
+    "tabs"
+  ],
   "background": {
     "service_worker": "background.js"
   },
   "content_scripts": [
     {
       "matches": [
-        "https://www.instagram.com/*", 
-        "https://fastdl.app/*", 
+        "https://www.instagram.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "ig-progressbar.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://fastdl.app/*",
         "https://sssinstagram.com/*"
       ],
-      "js": ["content.js"],
+      "js": [
+        "content.js"
+      ],
       "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://www.instagram.com/*"
+      ],
+      "js": [
+        "anon-bootstrap.js"
+      ],
+      "run_at": "document_start"
     }
   ],
   "action": {
@@ -34,5 +57,15 @@
   "host_permissions": [
     "http://*/*",
     "https://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "inject.js"
+      ],
+      "matches": [
+        "https://www.instagram.com/*"
+      ]
+    }
   ]
 }
